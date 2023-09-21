@@ -11,6 +11,12 @@ skip-string-normalization = false
 multi_line_output = 3
 workers = 1
 
+[tool.pylint.MASTER]
+jobs = 1
+
+[tool.pylint.FORMAT]
+max-line-length = 88
+
 [tool.poetry.dependencies]
 python = "^3.8"
 click = "^8.1.7"
