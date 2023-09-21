@@ -5,15 +5,23 @@ description = ""
 authors = ["Franco Demarco <franco.demarco@muttdata.ai>"]
 readme = "README.md"
 
+[tool.black]
+line-length = 88
+skip-string-normalization = false
+multi_line_output = 3
+workers = 1
+
 [tool.poetry.dependencies]
 python = "^3.8"
 click = "^8.1.7"
 requests = "^2.31.0"
 
-
 [tool.poetry.scripts]
 hypermodern-python = "franco_hypermodern_python.console:main"
 
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pylint = "^2.17.5"
 
 [build-system]
 requires = ["poetry-core"]
