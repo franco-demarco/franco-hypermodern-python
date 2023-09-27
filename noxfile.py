@@ -4,7 +4,7 @@
 import nox
 
 
-@nox.session(python=["3.8", "3.7"])
+@nox.session(python=["3.8"])
 def tests(session):
     """Run coverage tests
 
@@ -13,4 +13,4 @@ def tests(session):
     """
     session.run("poetry", "install", "--with=dev", external=True)
     cmd = ["poetry", "run", "pytest", "--cov"]
-    session.run(cmd)
+    session.run(*cmd)
