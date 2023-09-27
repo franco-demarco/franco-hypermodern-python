@@ -57,3 +57,12 @@ def test_main_invokes_requests_get(runner, mock_requests_get):
     """
     runner.invoke(console.main)
     assert mock_requests_get.called
+
+
+def test_main_requests_wikipedia(runner, mock_requests_get):
+    """
+    Running console main should request Wikipedia
+    """
+    runner.invoke(console.main)
+    requested_url = mock_requests_get.call_args[0][0]
+    assert "en.wikipedia.org" in requested_url
