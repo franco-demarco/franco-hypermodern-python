@@ -1,10 +1,9 @@
 """
-This module includes tests for the franco hypermodern python module.
+This module includes tests for the console module.
 """
 
 import click.testing
 import pytest
-import requests
 from franco_hypermodern_python import console
 
 
@@ -16,38 +15,6 @@ def fixture_runner():
         CliRunner: click testing runner
     """
     return click.testing.CliRunner()
-
-
-@pytest.fixture(name="mock_requests_get_successful")
-def fixture_mock_requests_get_successful(mocker):
-    """Create mock for requests get method
-
-    Args:
-        mocker (MockerFixture): Pytest mocker fixture
-
-    Returns:
-        MagicMock: Request get mock
-    """
-    mock = mocker.patch("requests.get")
-    mock.return_value.__enter__.return_value.json.return_value = {
-        "title": "Lorem Ipsum",
-        "extract": "Lorem ipsum dolor sit amet",
-    }
-    return mock
-
-
-@pytest.fixture(name="mock_requests_get_failure")
-def fixture_mock_requests_get_failure(mock_requests_get_successful):
-    """Create failing mock for requests get method
-
-    Args:
-        mocker (MockerFixture): Pytest mocker fixture
-
-    Returns:
-        MagicMock: Failing request get mock
-    """
-    mock_requests_get_successful.side_effect = requests.RequestException
-    return mock_requests_get_successful
 
 
 def test_main_succeeds(runner, mock_requests_get_successful):  # pylint: disable=W0613"
