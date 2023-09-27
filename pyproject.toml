@@ -17,6 +17,17 @@ jobs = 1
 [tool.pylint.FORMAT]
 max-line-length = 88
 
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["franco_hypermodern_python"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+
 [tool.poetry.dependencies]
 python = "^3.8"
 click = "^8.1.7"
@@ -29,6 +40,9 @@ hypermodern-python = "franco_hypermodern_python.console:main"
 black = "^23.9.1"
 pylint = "^2.17.5"
 pre-commit = "^3.4.0"
+pytest = "^7.4.2"
+coverage = {extras = ["toml"], version = "^7.3.1"}
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
