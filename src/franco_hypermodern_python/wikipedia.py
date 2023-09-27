@@ -7,7 +7,7 @@ import click
 from .constants import API_URL
 
 
-def random_info(language='en'):
+def random_info(language="en"):
     """Retrieves random information from the Wikipedia
 
     Args:

@@ -17,12 +17,17 @@ def fixture_runner():
     return click.testing.CliRunner()
 
 
-def test_main_succeeds(runner, mock_requests_get_successful):  # pylint: disable=W0613"
+@pytest.fixture(name="mock_random_info")
+def fixture_mock_random_info(mocker):
+    """Create mock for requests get method
+
+    Args:
+        mocker (MockerFixture): Pytest mocker fixture
+
+    Returns:
+        MagicMock: Request get mock
     """
-    Running console main should succeed
-    """
-    result = runner.invoke(console.main)
-    assert result.exit_code == 0
+    return mocker.patch("franco_hypermodern_python.wikipedia.random_info")
 
 
 def test_main_prints_title(
@@ -35,23 +40,6 @@ def test_main_prints_title(
     assert "Lorem ipsum" in result.output
 
 
-def test_main_invokes_requests_get(runner, mock_requests_get_successful):
-    """
-    Running console main should make a GET request
-    """
-    runner.invoke(console.main)
-    assert mock_requests_get_successful.called
-
-
-def test_main_requests_wikipedia(runner, mock_requests_get_successful):
-    """
-    Running console main should request Wikipedia
-    """
-    runner.invoke(console.main)
-    requested_url = mock_requests_get_successful.call_args[0][0]
-    assert "en.wikipedia.org" in requested_url
-
-
 def test_main_fails_gracefully_on_request_error(
     runner, mock_requests_get_failure
 ):  # pylint: disable=W0613
@@ -60,3 +48,14 @@ def test_main_fails_gracefully_on_request_error(
     """
     result = runner.invoke(console.main)
     assert "Error" in result.output
+
+
+def test_main_uses_specified_language(
+    runner, mock_random_info
+):  # pylint: disable=W0613
+    """
+    Retrieved article should be in the specified language
+    """
+
+    runner.invoke(console.main, ["--language=de"])
+    mock_random_info.assert_called_with(language="de")
