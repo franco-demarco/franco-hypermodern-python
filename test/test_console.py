@@ -17,8 +17,8 @@ def fixture_runner():
     return click.testing.CliRunner()
 
 
-@pytest.fixture(name="mock_requests_get")
-def fixture_mock_requests_get(mocker):
+@pytest.fixture(name="mock_requests_get_successful")
+def fixture_mock_requests_get_successful(mocker):
     """Create mock for requests get method
 
     Args:
@@ -35,7 +35,21 @@ def fixture_mock_requests_get(mocker):
     return mock
 
 
-def test_main_succeeds(runner, mock_requests_get):  # pylint: disable=W0613"
+@pytest.fixture(name="mock_requests_get_failure")
+def fixture_mock_requests_get_failure(mock_requests_get_successful):
+    """Create failing mock for requests get method
+
+    Args:
+        mocker (MockerFixture): Pytest mocker fixture
+
+    Returns:
+        MagicMock: Failing request get mock
+    """
+    mock_requests_get_successful.side_effect = Exception("Boom!")
+    return mock_requests_get_successful
+
+
+def test_main_succeeds(runner, mock_requests_get_successful):  # pylint: disable=W0613"
     """
     Running console main should succeed
     """
@@ -43,7 +57,9 @@ def test_main_succeeds(runner, mock_requests_get):  # pylint: disable=W0613"
     assert result.exit_code == 0
 
 
-def test_main_prints_title(runner, mock_requests_get):  # pylint: disable=W0613
+def test_main_prints_title(
+    runner, mock_requests_get_successful
+):  # pylint: disable=W0613
     """
     Running console main should print title
     """
@@ -51,18 +67,28 @@ def test_main_prints_title(runner, mock_requests_get):  # pylint: disable=W0613
     assert "Lorem ipsum" in result.output
 
 
-def test_main_invokes_requests_get(runner, mock_requests_get):
+def test_main_invokes_requests_get(runner, mock_requests_get_successful):
     """
     Running console main should make a GET request
     """
     runner.invoke(console.main)
-    assert mock_requests_get.called
+    assert mock_requests_get_successful.called
 
 
-def test_main_requests_wikipedia(runner, mock_requests_get):
+def test_main_requests_wikipedia(runner, mock_requests_get_successful):
     """
     Running console main should request Wikipedia
     """
     runner.invoke(console.main)
-    requested_url = mock_requests_get.call_args[0][0]
+    requested_url = mock_requests_get_successful.call_args[0][0]
     assert "en.wikipedia.org" in requested_url
+
+
+def test_main_fails_on_request_error(
+    runner, mock_requests_get_failure
+):  # pylint: disable=W0613
+    """
+    Running console main should fail on request error
+    """
+    result = runner.invoke(console.main)
+    assert result.exit_code == 1
