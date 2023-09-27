@@ -26,6 +26,4 @@ def random_info(language='en'):
     except requests.RequestException as error:
         error_message = str(error)
         raise click.ClickException(error_message)
-    title = data["title"]
-    extract = data["extract"]
-    return title, extract
+    return data["title"], data["extract"]
