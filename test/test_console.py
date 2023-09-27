@@ -49,3 +49,11 @@ def test_main_prints_title(runner, mock_requests_get):  # pylint: disable=W0613
     """
     result = runner.invoke(console.main)
     assert "Lorem ipsum" in result.output
+
+
+def test_main_invokes_requests_get(runner, mock_requests_get):
+    """
+    Running console main should make a GET request
+    """
+    runner.invoke(console.main)
+    assert mock_requests_get.called
