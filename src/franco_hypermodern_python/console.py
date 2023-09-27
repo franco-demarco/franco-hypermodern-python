@@ -4,10 +4,9 @@
 import textwrap
 
 import click
-import requests
 
 from . import __version__
-from .constants import API_URL
+from .wikipedia import random_info
 
 
 @click.command()
@@ -15,11 +14,6 @@ from .constants import API_URL
 def main():
     """The hypermodern Python project."""
     click.echo("Hello World!")
-    with requests.get(API_URL, timeout=1) as response:
-        response.raise_for_status()
-        data = response.json()
-    title = data["title"]
-    extract = data["extract"]
-
+    title, extract = random_info()
     click.secho(title, fg="green")
     click.echo(textwrap.fill(extract))

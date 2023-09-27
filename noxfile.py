@@ -12,4 +12,5 @@ def tests(session):
         session (Session): Nox session
     """
     session.run("poetry", "install", "--with=dev", external=True)
-    session.run("pytest", "--cov", external=True)
+    cmd = ["poetry", "run", "pytest", "--cov"]
+    session.run(cmd)
