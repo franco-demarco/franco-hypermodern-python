@@ -4,6 +4,7 @@ This module includes tests for the franco hypermodern python module.
 
 import click.testing
 import pytest
+import requests
 from franco_hypermodern_python import console
 
 
@@ -45,7 +46,7 @@ def fixture_mock_requests_get_failure(mock_requests_get_successful):
     Returns:
         MagicMock: Failing request get mock
     """
-    mock_requests_get_successful.side_effect = Exception("Boom!")
+    mock_requests_get_successful.side_effect = requests.RequestException
     return mock_requests_get_successful
 
 
@@ -84,11 +85,11 @@ def test_main_requests_wikipedia(runner, mock_requests_get_successful):
     assert "en.wikipedia.org" in requested_url
 
 
-def test_main_fails_on_request_error(
+def test_main_fails_gracefully_on_request_error(
     runner, mock_requests_get_failure
 ):  # pylint: disable=W0613
     """
-    Running console main should fail on request error
+    Running console main should fail gracefully on request error
     """
     result = runner.invoke(console.main)
-    assert result.exit_code == 1
+    assert "Error" in result.output
