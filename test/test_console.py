@@ -17,7 +17,25 @@ def fixture_runner():
     return click.testing.CliRunner()
 
 
-def test_main_succeeds(runner):
+@pytest.fixture(name="mock_requests_get")
+def fixture_mock_requests_get(mocker):
+    """Create mock for requests get method
+
+    Args:
+        mocker (MockerFixture): Pytest mocker fixture
+
+    Returns:
+        MagicMock: Request get mock
+    """
+    mock = mocker.patch("requests.get")
+    mock.return_value.__enter__.return_value.json.return_value = {
+        "title": "Lorem Ipsum",
+        "extract": "Lorem ipsum dolor sit amet",
+    }
+    return mock
+
+
+def test_main_succeeds(runner, mock_requests_get):  # pylint: disable=W0613"
     """
     Running console main should succeed
     """
