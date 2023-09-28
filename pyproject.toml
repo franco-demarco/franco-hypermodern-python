@@ -45,6 +45,7 @@ coverage = {extras = ["toml"], version = "^7.3.1"}
 pytest-cov = "^4.1.0"
 nox = "^2023.4.22"
 pytest-mock = "^3.11.1"
+nox-poetry = "^1.0.3"
 
 [build-system]
 requires = ["poetry-core"]
