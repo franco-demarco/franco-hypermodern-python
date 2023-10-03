@@ -1,7 +1,8 @@
 "This module setups Nox testing session"
 
 
-# import nox_poetry as nox
+import tempfile
+
 import nox
 
 
@@ -50,3 +51,24 @@ def black(session):
     args = session.posargs or ["src", "tests", "noxfile.py"]
     session.install("black")
     session.run("black", *args)
+
+
+@nox.session(python="3.8")
+def safety(session):
+    """Check the dependencies for known security vulnerabilities
+
+    Args:
+        session (Session): Nox session
+    """
+    with tempfile.NamedTemporaryFile() as requirements:
+        session.run(
+            "poetry",
+            "export",
+            "--with=dev",
+            "--format=requirements.txt",
+            "--without-hashes",
+            f"--output={requirements.name}",
+            external=True,
+        )
+        session.install("safety")
+        session.run("safety", "check", f"--file={requirements.name}", "--full-report")
