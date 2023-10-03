@@ -4,6 +4,7 @@ This module includes tests for the console module.
 
 import click.testing
 import pytest
+
 from franco_hypermodern_python import console
 
 

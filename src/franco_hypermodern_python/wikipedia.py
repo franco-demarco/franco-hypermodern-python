@@ -2,8 +2,9 @@
 This module includes the random information retrieval
 """
 
-import requests
 import click
+import requests
+
 from .constants import API_URL
 
 
@@ -25,5 +26,5 @@ def random_info(language="en"):
             data = response.json()
     except requests.RequestException as error:
         error_message = str(error)
-        raise click.ClickException(error_message)
+        raise click.ClickException(error_message) from error
     return data["title"], data["extract"]
