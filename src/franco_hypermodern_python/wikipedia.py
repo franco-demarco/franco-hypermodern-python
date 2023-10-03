@@ -5,9 +5,9 @@ This module includes the random information retrieval
 from dataclasses import dataclass
 
 import click
-import requests
 import desert
 import marshmallow
+import requests
 
 from .constants import API_URL
 

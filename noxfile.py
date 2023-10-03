@@ -6,20 +6,29 @@ import tempfile
 import nox
 
 locations = ["src", "tests", "noxfile.py"]
+PACKAGE = "franco_hypermodern_python"
 
 
 @nox.session(python=["3.9", "3.8"])
-def tests(session):
+def cov_tests(session):
     """Run coverage tests
 
     Args:
         session (Session): Nox session
     """
-    session.install("pytest", ".")
-    session.install("coverage[toml]", ".")
-    session.install("pytest-cov", ".")
-    session.install("pytest-mock", ".")
+    session.install(".", "pytest", "coverage[toml]", "pytest-cov", "pytest-mock")
     session.run("pytest", "--cov")
+
+
+@nox.session(python=["3.9", "3.8"])
+def typeguard_tests(session):
+    """Run tests with type checking
+
+    Args:
+        session (Session): Nox session
+    """
+    session.install(".", "pytest", "pytest-mock", "typeguard")
+    session.run("pytest", f"--typeguard-packages={PACKAGE}")
 
 
 @nox.session(python=["3.8", "3.9"])
@@ -36,6 +45,7 @@ def lint(session):
         "flake8-import-order",
         "flake8-bugbear",
         "flake8-bandit",
+        "flake8-annotations",
     )
     session.run("flake8", *args)
 
