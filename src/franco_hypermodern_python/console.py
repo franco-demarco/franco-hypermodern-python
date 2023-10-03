@@ -18,8 +18,9 @@ from . import __version__, wikipedia
     show_default=True,
 )
 @click.version_option(version=__version__)
-def main(language):
+def main(language: str) -> None:
     """The hypermodern Python project."""
-    title, extract = wikipedia.random_info(language=language)
+    data = wikipedia.random_info(language=language)
+    title, extract = data.title, data.extract
     click.secho(title, fg="green")
     click.echo(textwrap.fill(extract))

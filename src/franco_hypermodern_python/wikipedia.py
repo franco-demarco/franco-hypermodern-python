@@ -2,13 +2,30 @@
 This module includes the random information retrieval
 """
 
+from dataclasses import dataclass
+
 import click
 import requests
+import desert
+import marshmallow
 
 from .constants import API_URL
 
 
-def random_info(language="en"):
+@dataclass
+class Page:
+    """
+    Page schema dataclass
+    """
+
+    title: str
+    extract: str
+
+
+schema = desert.schema(Page, meta={"unknown": marshmallow.EXCLUDE})
+
+
+def random_info(language: str = "en") -> Page:
     """Retrieves random information from the Wikipedia
 
     Args:
@@ -27,4 +44,4 @@ def random_info(language="en"):
     except requests.RequestException as error:
         error_message = str(error)
         raise click.ClickException(error_message) from error
-    return data["title"], data["extract"]
+    return schema.load(data)

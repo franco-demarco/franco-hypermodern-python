@@ -5,8 +5,7 @@ import tempfile
 
 import nox
 
-
-nox.options.sessions = "lint", "black"
+locations = ["src", "tests", "noxfile.py"]
 
 
 @nox.session(python=["3.9", "3.8"])
@@ -48,7 +47,7 @@ def black(session):
     Args:
         session (Session): Nox session
     """
-    args = session.posargs or ["src", "tests", "noxfile.py"]
+    args = session.posargs or locations
     session.install("black")
     session.run("black", *args)
 
@@ -72,3 +71,27 @@ def safety(session):
         )
         session.install("safety")
         session.run("safety", "check", f"--file={requirements.name}", "--full-report")
+
+
+@nox.session(python=["3.8", "3.9"])
+def mypy(session):
+    """Static type check
+
+    Args:
+        session (Session): Nox session
+    """
+    args = session.posargs or locations
+    session.install("mypy")
+    session.run("mypy", *args)
+
+
+@nox.session(python=["3.8", "3.9"])
+def pytype(session):
+    """Run static type checker
+
+    Args:
+        session (Session): Nox session
+    """
+    args = session.posargs or ["--disable=import-error", *locations]
+    session.install("pytype")
+    session.run("pytype", *args)

@@ -28,10 +28,20 @@ source = ["franco_hypermodern_python"]
 show_missing = true
 fail_under = 80
 
+[[tool.mypy.overrides]]
+module = [
+    "nox.*",
+    "pytest"
+]
+ignore_missing_imports = true
+
+
 [tool.poetry.dependencies]
 python = "^3.8"
 click = "^8.1.7"
 requests = "^2.31.0"
+desert = "^2022.9.22"
+marshmallow = "^3.20.1"
 
 [tool.poetry.scripts]
 hypermodern-python = "franco_hypermodern_python.console:main"
@@ -47,6 +57,8 @@ nox = "^2023.4.22"
 pytest-mock = "^3.11.1"
 nox-poetry = "^1.0.3"
 bandit = "^1.7.5"
+mypy = "^1.5.1"
+pytype = {version = "^2023.9.27", python = "3.8"}
 
 [build-system]
 requires = ["poetry-core"]
