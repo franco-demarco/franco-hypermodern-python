@@ -1,8 +1,9 @@
 
 [flake8]
-select = B,B9,BLK,C,E,F,I,W
+select = B,B9,BLK,C,E,F,I,S,W
 max-complexity = 10
 ignore = E203,E501,W503
 max-line-length = 80
 application-import-names = franco_hypermodern_python,tests
 import-order-style = google
+per-file-ignores = tests/*:S101

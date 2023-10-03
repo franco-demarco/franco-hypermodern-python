@@ -30,7 +30,13 @@ def lint(session):
         session (Session): Nox session
     """
     args = session.posargs or ["src", "tests", "noxfile.py"]
-    session.install("flake8", "flake8-black", "flake8-import-order", "flake8-bugbear")
+    session.install(
+        "flake8",
+        "flake8-black",
+        "flake8-import-order",
+        "flake8-bugbear",
+        "flake8-bandit",
+    )
     session.run("flake8", *args)
 
 
