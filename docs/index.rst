@@ -1,6 +1,13 @@
 The Hypermodern Python Project
 ==============================
 
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    license
+
+
 The example project for the
 `Hypermodern Python <https://cjolowicz.github.io/posts/hypermodern-python-01-setup/>`_ article series.
 The command-line interface prints random facts to your console,
