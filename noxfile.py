@@ -121,12 +121,12 @@ def xdoctest(session):
     session.run("xdoctest", PACKAGE, *args)
 
 
-@nox.session(python=["3.8"])
-def sphinx(session):
+@nox.session(python=["3.9"])
+def docs(session):
     """Build the documentation.
 
     Args:
         session (Session): Nox session
     """
-    session.install("sphinx")
+    session.install(".", "sphinx", "autodoc", "sphinx-autodoc-typehints")
     session.run("sphinx-build", "docs", "docs/_build")
