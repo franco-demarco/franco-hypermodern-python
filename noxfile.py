@@ -3,13 +3,13 @@
 
 import tempfile
 
-import nox
+import nox_poetry as nox
 
 locations = ["src", "tests", "noxfile.py"]
 PACKAGE = "franco_hypermodern_python"
 
 
-@nox.session(python=["3.9", "3.8"])
+@nox.session(python=["3.9"])
 def cov_tests(session):
     """Run coverage tests.
 
@@ -20,7 +20,7 @@ def cov_tests(session):
     session.run("pytest", "--cov")
 
 
-@nox.session(python=["3.9", "3.8"])
+@nox.session(python=["3.9"])
 def typeguard_tests(session):
     """Run tests with type checking.
 
@@ -31,7 +31,7 @@ def typeguard_tests(session):
     session.run("pytest", f"--typeguard-packages={PACKAGE}")
 
 
-@nox.session(python=["3.8", "3.9"])
+@nox.session(python=["3.9"])
 def lint(session):
     """Run linting.
 
@@ -52,7 +52,7 @@ def lint(session):
     session.run("flake8", *args)
 
 
-@nox.session(python=["3.8", "3.9"])
+@nox.session(python=["3.9"])
 def black(session):
     """Run formatter.
 
@@ -64,7 +64,7 @@ def black(session):
     session.run("black", *args)
 
 
-@nox.session(python="3.8")
+@nox.session(python="3.9")
 def safety(session):
     """Check the dependencies for known security vulnerabilities.
 
@@ -85,19 +85,7 @@ def safety(session):
         session.run("safety", "check", f"--file={requirements.name}", "--full-report")
 
 
-@nox.session(python=["3.8", "3.9"])
-def mypy(session):
-    """Static type check.
-
-    Args:
-        session (Session): Nox session
-    """
-    args = session.posargs or locations
-    session.install("mypy")
-    session.run("mypy", *args)
-
-
-@nox.session(python=["3.8", "3.9"])
+@nox.session(python=["3.9"])
 def pytype(session):
     """Run static type checker.
 
@@ -109,7 +97,7 @@ def pytype(session):
     session.run("pytype", *args)
 
 
-@nox.session(python=["3.8"])
+@nox.session(python=["3.9"])
 def xdoctest(session):
     """Run examples with xdoctest.
 
