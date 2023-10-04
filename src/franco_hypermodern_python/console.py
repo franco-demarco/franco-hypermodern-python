@@ -1,5 +1,4 @@
-"""The hypermodern Python project module."""
-
+"""Command-line interface."""
 
 import textwrap
 

@@ -1,6 +1,4 @@
-""""
-This module includes the random information retrieval
-"""
+"""Client for the Wikipedia REST API, version 1."""
 
 from dataclasses import dataclass
 
@@ -14,8 +12,11 @@ from .constants import API_URL
 
 @dataclass
 class Page:
-    """
-    Page schema dataclass
+    """Page resource.
+
+    Attributes:
+        title (str): The title of the Wikipedia article.
+        extract (str): A plain text summary of the Wikipedia article.
     """
 
     title: str
@@ -26,10 +27,10 @@ schema = desert.schema(Page, meta={"unknown": marshmallow.EXCLUDE})
 
 
 def random_info(language: str = "en") -> Page:
-    """Retrieves random information from the Wikipedia
+    """Retrieves random information from the Wikipedia.
 
     Args:
-    language (str, optional): _description_. Defaults to 'en'.
+    language (str, optional): Wikipedia article language. Defaults to 'en'.
 
     Raises:
         click.ClickException: Connection Error

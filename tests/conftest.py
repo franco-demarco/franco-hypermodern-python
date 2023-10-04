@@ -1,6 +1,4 @@
-"""
-This module includes all shared pytest fixtures
-"""
+"""This module includes all shared pytest fixtures."""
 
 import pytest
 import requests
@@ -8,7 +6,7 @@ import requests
 
 @pytest.fixture(name="mock_requests_get_successful")
 def fixture_mock_requests_get_successful(mocker):
-    """Create mock for requests get method
+    """Create mock for requests get method.
 
     Args:
         mocker (MockerFixture): Pytest mocker fixture
@@ -26,7 +24,7 @@ def fixture_mock_requests_get_successful(mocker):
 
 @pytest.fixture(name="mock_requests_get_failure")
 def fixture_mock_requests_get_failure(mock_requests_get_successful):
-    """Create failing mock for requests get method
+    """Create failing mock for requests get method.
 
     Args:
         mocker (MockerFixture): Pytest mocker fixture
