@@ -1,7 +1,8 @@
 """Sphinx configuration."""
-PROJECT = "franco-hypermodern-python"
-AUTHOR = "FrancoD"
-COPYRIGHT = f"2023, {AUTHOR}"
+# pylint: disable=W0622,C0103
+project = "franco-hypermodern-python"
+author = "FrancoD"
+copyright = f"2023, {author}"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
