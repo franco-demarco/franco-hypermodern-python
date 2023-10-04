@@ -27,7 +27,7 @@ def fixture_mock_requests_get_failure(mock_requests_get_successful):
     """Create failing mock for requests get method.
 
     Args:
-        mocker (MockerFixture): Pytest mocker fixture
+        mock_requests_get_successful (MockerFixture): Pytest mocker fixture
 
     Returns:
         MagicMock: Failing request get mock

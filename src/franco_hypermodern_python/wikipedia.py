@@ -30,13 +30,13 @@ def random_info(language: str = "en") -> Page:
     """Retrieves random information from the Wikipedia.
 
     Args:
-    language (str, optional): Wikipedia article language. Defaults to 'en'.
-
-    Raises:
-        click.ClickException: Connection Error
+        language (str): Wikipedia article language. Defaults to 'en'.
 
     Returns:
         Tuple(str, str): Random article's title and extract
+
+    Raises:
+        ClickException: Connection Error
     """
     try:
         with requests.get(API_URL % language, timeout=1) as response:

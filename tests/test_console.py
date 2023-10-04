@@ -32,7 +32,12 @@ def fixture_mock_random_info(mocker):
 def test_main_prints_title(
     runner, mock_requests_get_successful
 ):  # pylint: disable=W0613
-    """Running console main should print title."""
+    """Should print title.
+
+    Args:
+        runner (CliRunner): Cli runner
+        mock_requests_get_successful (MagicMock): Mocks a successful get request
+    """
     result = runner.invoke(console.main)
     assert "Lorem ipsum" in result.output
 
@@ -40,7 +45,12 @@ def test_main_prints_title(
 def test_main_fails_gracefully_on_request_error(
     runner, mock_requests_get_failure
 ):  # pylint: disable=W0613
-    """Running console main should fail gracefully on request error."""
+    """Should fail gracefully on request error.
+
+    Args:
+        runner (CliRunner): Cli runner
+        mock_requests_get_failure (MagicMock): Mocks failure at a get request
+    """
     result = runner.invoke(console.main)
     assert "Error" in result.output
 
@@ -48,6 +58,11 @@ def test_main_fails_gracefully_on_request_error(
 def test_main_uses_specified_language(
     runner, mock_random_info
 ):  # pylint: disable=W0613
-    """Retrieved article should be in the specified language."""
+    """Retrieved article should be in the specified language.
+
+    Args:
+        runner (CliRunner): Cli runner
+        mock_random_info (MagicMock): Mocks wikipedia client
+    """
     runner.invoke(console.main, ["--language=de"])
     mock_random_info.assert_called_with(language="de")

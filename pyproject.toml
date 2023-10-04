@@ -35,7 +35,6 @@ module = [
 ]
 ignore_missing_imports = true
 
-
 [tool.poetry.dependencies]
 python = "^3.8.1"
 click = "^8.1.7"
@@ -62,6 +61,7 @@ pytype = {version = "^2023.9.27", python = "3.8"}
 typeguard = "^4.1.5"
 flake8-annotations = "^3.0.1"
 flake8-docstrings = "^1.7.0"
+darglint = "^1.8.1"
 
 [build-system]
 requires = ["poetry-core"]
