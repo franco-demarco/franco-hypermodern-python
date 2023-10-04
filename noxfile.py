@@ -107,3 +107,26 @@ def pytype(session):
     args = session.posargs or ["--disable=import-error", *locations]
     session.install("pytype")
     session.run("pytype", *args)
+
+
+@nox.session(python=["3.8"])
+def xdoctest(session):
+    """Run examples with xdoctest.
+
+    Args:
+        session (Session): Nox session
+    """
+    args = session.posargs or ["all"]
+    session.install(".", "xdoctest", "pygments")
+    session.run("xdoctest", PACKAGE, *args)
+
+
+@nox.session(python=["3.8"])
+def sphinx(session):
+    """Build the documentation.
+
+    Args:
+        session (Session): Nox session
+    """
+    session.install("sphinx")
+    session.run("sphinx-build", "docs", "docs/_build")
